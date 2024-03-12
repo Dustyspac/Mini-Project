@@ -94,20 +94,20 @@ const Footer = () => {
             <div className="team">
               <p>FE</p>
               <img src={GithubIcon} alt="searchIcon" />
-              <a href="https://github.com/sintobury">김기현</a>
+              <a href="https://github.com/Dustyspac">김기현</a>
               <img src={GithubIcon} alt="searchIcon" />
-              <a href="https://github.com/eg1377">이예진</a>
+              <a href="https://github.com/yeeendy">이예진</a>
               <img src={GithubIcon} alt="searchIcon" />
-              <a href="https://github.com/pearl-sea">정예진</a>
+              <a href="https://github.com/asdfg030906">정예진</a>
             </div>
             <div className="team">
               <p>BE</p>
               <img src={GithubIcon} alt="searchIcon" />
-              <a href="https://github.com/C5ng">김대용</a>
+              <a href="https://github.com/cheesecup">김대용</a>
               <img src={GithubIcon} alt="searchIcon" />
-              <a href="https://github.com/Jeonni">김엄지</a>
+              <a href="https://github.com/kimeomji333">김엄지</a>
               <img src={GithubIcon} alt="searchIcon" />
-              <a href="https://github.com/Jung-seo">황승미</a>
+              <a href="https://github.com/Seungmi97">황승미</a>
             </div>
           </div>
         </div>
