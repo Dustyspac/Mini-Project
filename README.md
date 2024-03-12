@@ -1,52 +1,47 @@
 ## Code Convention
 
 
-## 폴더구조
+## File-Tree
 
-#### APIS
-##### Axios
-
-#### Components
-
-##### common
-NavBar.jsx
-Header.jsx
-Footer.jsx
-Button.jsx
-NewsBox.jsx
-
-##### Auth
-SigninForm
-SignupForm
-
-##### Main
-
-
-##### Category
-
-
-##### AddNews
-
-
-
----
-#### Pages
-Signin.jsx
-SignUp.jsx
-MainPage.jsx
-Category.jsx
-DetailPage.jsx
-AddNews.jsx
-
----
-#### Shared
-##### 
-
----
-#### Styles
-###### globalStyle
-
----
-#### redux
-##### store
-##### modules
+        📦src
+         ┣ 📂APIS
+         ┃ ┣ 📂Axios
+         ┃ ┃ ┗ 📜api.js
+         ┃ ┣ 📜auth.js
+         ┃ ┗ 📜news.js
+         ┣ 📂Components
+         ┃ ┣ 📂Auth
+         ┃ ┃ ┣ 📜SignInForm.jsx
+         ┃ ┃ ┗ 📜SignUpForm.jsx
+         ┃ ┣ 📂Common
+         ┃ ┃ ┣ 📜Button.jsx
+         ┃ ┃ ┣ 📜Footer.jsx
+         ┃ ┃ ┣ 📜Header.jsx
+         ┃ ┃ ┗ 📜Navbar.jsx
+         ┃ ┗ 📂News
+         ┃ ┃ ┣ 📜NewsBox.jsx
+         ┃ ┃ ┗ 📜NewsList.jsx
+         ┣ 📂Pages
+         ┃ ┣ 📜AddNews.jsx
+         ┃ ┣ 📜Category.jsx
+         ┃ ┣ 📜DetailPage.jsx
+         ┃ ┣ 📜MainPage.jsx
+         ┃ ┣ 📜SignIn.jsx
+         ┃ ┗ 📜SignUp.jsx
+         ┣ 📂Redux
+         ┃ ┣ 📂modules
+         ┃ ┃ ┗ 📜user.js
+         ┃ ┗ 📂store
+         ┃ ┃ ┗ 📜configStore.js
+         ┣ 📂Shared
+         ┃ ┗ 📜router.js
+         ┣ 📂Styles
+         ┃ ┗ 📜globalStyle.js
+         ┣ 📜App.css
+         ┣ 📜App.js
+         ┣ 📜App.test.js
+         ┣ 📜index.css
+         ┣ 📜index.js
+         ┣ 📜logo.svg
+         ┣ 📜reportWebVitals.js
+         ┗ 📜setupTests.js
