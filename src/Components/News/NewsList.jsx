@@ -2,7 +2,9 @@ import React from "react";
 import styled from "styled-components";
 import NewsBox from "./NewsBox";
 
+
 function NewsList() {
+
   return (
     <BoxContainer>
       <NewsBox />

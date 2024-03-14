@@ -1,22 +1,42 @@
 import React from "react";
 import styled from "styled-components";
+import { getMainPage } from "../../APIS/news";
+import { useQuery } from "react-query";
+import { Link } from "react-router-dom";
 
 function NewsBox() {
+  const { isLoading, isError, data } = useQuery("mainPage", getMainPage);
+
   return (
-    <Box>
+    <Box key={data.articleId}>
+      <div className="Contents">
+        <CustomLink to={`/${data.articleId}`} key={data.articleId}>
+          <p>상세보기</p>
+        </CustomLink>
       <ImageBox />
       <Contents>
-        <h2 className="title">개발자들의 취업 성지 "원티드랩"</h2>
+        <h2 className="title">{data.title}</h2>
         <div className="InboxContents">
-          <p>업로드 날짜 (24.03.12)</p>
-          <p className="Category">테크</p>
+          <p>{data.createdAt}</p>
+          <p className="Category">{data.category}</p>
         </div>
       </Contents>
+      </div>
     </Box>
   );
 }
 
 export default NewsBox;
+
+const CustomLink = styled(Link)`
+  margin-top: 20px;
+  color: black;
+  text-decoration: none;
+  font-size: 21px;
+  &:visited {
+    color: black;
+  }
+`;
 
 const Box = styled.div`
   border: 1px solid black;
