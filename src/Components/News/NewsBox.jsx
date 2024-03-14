@@ -8,17 +8,17 @@ function NewsBox() {
   const { isLoading, isError, data } = useQuery("mainPage", getMainPage);
 
   return (
-    <Box key={data.articleId}>
+    <Box key={isLoading.articleId}>
       <div className="Contents">
-        <CustomLink to={`/${data.articleId}`} key={data.articleId}>
+        <CustomLink to={`/${isLoading.articleId}`} key={isLoading.articleId}>
           <p>상세보기</p>
         </CustomLink>
       <ImageBox />
       <Contents>
-        <h2 className="title">{data.title}</h2>
+        <h2 className="title">{isLoading.title}</h2>
         <div className="InboxContents">
-          <p>{data.createdAt}</p>
-          <p className="Category">{data.category}</p>
+          <p>{isLoading.createdAt}</p>
+          <p className="Category">{isLoading.category}</p>
         </div>
       </Contents>
       </div>
