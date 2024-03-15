@@ -2,30 +2,42 @@ import React from "react";
 import SearchIcon from "../../Assets/search_icon.svg";
 import UserIcon from "../../Assets/user_icon.svg";
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 
 function Header() {
   return (
     <HeaderContainer>
       <WriteButtonContainer>
-        {/* 관리자 여부에 따라 visible 여부 달라짐 */}
-        <WriteButton>글쓰기</WriteButton>
+        {/* TODO : 관리자 여부에 따라 visible 여부 달라짐 */}
+        <StyledLink to="/article">
+          <WriteButton>글쓰기</WriteButton>
+        </StyledLink>
       </WriteButtonContainer>
-      <Logo>NEWNATION</Logo>
+      <StyledLink to="/">
+        <Logo>NEWNATION</Logo>
+      </StyledLink>
       <IconContainer>
         <IconBox>
-          {" "}
           {/* 추후 Link로 변경 예정 */}
           <Icon src={SearchIcon} alt="searchIcon" />
         </IconBox>
-        <IconBox>
-          <Icon src={UserIcon} alt="userIcon" />
-        </IconBox>
+        {/* TODO : 로그인 하면 로그아웃 버튼으로 바껴야됨 */}
+        <StyledLink to="/login">
+          <IconBox>
+            <Icon src={UserIcon} alt="userIcon" />
+          </IconBox>
+        </StyledLink>
       </IconContainer>
     </HeaderContainer>
   );
 }
 
 export default Header;
+
+const StyledLink = styled(Link)`
+  all: unset;
+  cursor: pointer;
+`;
 
 const HeaderContainer = styled.header`
   width: 100%;
