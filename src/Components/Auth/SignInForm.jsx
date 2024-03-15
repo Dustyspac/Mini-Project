@@ -55,7 +55,6 @@ const DecorationDiv = styled.div`
 `
 function SignInForm() {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
   const [form, setForm] = useState({
     email:'',
     password:'',
@@ -75,7 +74,6 @@ function SignInForm() {
       window.sessionStorage.setItem('ACCESS_TOKEN', response.token);
       console.log(response);
       alert('로그인 성공 ><');
-      dispatch(userActions.login());
     },onError:(error) => {
       alert(`이메일은 ${error.response.data.data.email}. 비밀번호는 ${error.response.data.data.password}.`);
     }

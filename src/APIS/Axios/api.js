@@ -1,17 +1,14 @@
 import axios from "axios";
 
-
-
-
 const request = axios.create({
-  baseURL: 'http://3.34.197.152/api/user/login',
+  baseURL: 'https://baekwon.site'
 });
 
 request.interceptors.request.use(
   
   function(config){
     console.log(config)
-    config.headers.Authorization =`Bearer ${window.sessionStorage.getItem('ACCESS_TOKEN')}`;
+    config.headers.Authorization =`${window.sessionStorage.getItem('ACCESS_TOKEN')}`;
     return config
   },
 
@@ -29,9 +26,10 @@ request.interceptors.response.use(
   },
   
   function(error){
+    console.log(error);
     return Promise.reject(error);
   }
 
-)
+);
 
 export default request;
