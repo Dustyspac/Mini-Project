@@ -2,17 +2,34 @@ import React from "react";
 import SearchIcon from "../../Assets/search_icon.svg";
 import UserIcon from "../../Assets/user_icon.svg";
 import styled from "styled-components";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useQuery } from "react-query";
 import { useraccess } from "../../APIS/auth";
 
 function Header() {
-  const { isLoading, isError, data } = useQuery("authTypedd", useraccess);
+  const navigate = useNavigate();
+  const { isLoading, isError, data } = useQuery(
+    "checkAuthType",
+    useraccess
+    // {
+    //   onSuccess: (res) => {
+    //     console.log(res);
+    //   },
+    //   onError: (err) => {
+    //     console.log("aaaaaaaaaaaaa", err);
+    //   },
+    // }
+  );
 
   if (isLoading) return <div>Loading...</div>;
   if (isError) return <div>Error fetching data</div>;
 
   const authType = data?.authType;
+
+  const logout = () => {
+    // window.sessionStorage.removeItem("ACCESS_TOKEN");
+    // navigate("/login");
+  };
 
   return (
     <HeaderContainer>
@@ -33,11 +50,15 @@ function Header() {
           <Icon src={SearchIcon} alt="searchIcon" />
         </IconBox>
         {/* TODO : 로그인 하면 로그아웃 버튼으로 바껴야됨 */}
-        <StyledLink to="/login">
-          <IconBox>
-            <Icon src={UserIcon} alt="userIcon" />
-          </IconBox>
-        </StyledLink>
+        {authType ? (
+          <button onClick={logout}>로그아웃</button>
+        ) : (
+          <StyledLink to="/login">
+            <IconBox>
+              <Icon src={UserIcon} alt="userIcon" />
+            </IconBox>
+          </StyledLink>
+        )}
       </IconContainer>
     </HeaderContainer>
   );
