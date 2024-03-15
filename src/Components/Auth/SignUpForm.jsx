@@ -59,6 +59,7 @@ function SignUpForm() {
       navigate('/login');
     },onError:(error) => {
       alert(error.request.responseText);
+      console.log(error);
     }
   })
 
