@@ -3,15 +3,26 @@ import SearchIcon from "../../Assets/search_icon.svg";
 import UserIcon from "../../Assets/user_icon.svg";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
+import { useQuery } from "react-query";
+import { useraccess } from "../../APIS/auth";
 
 function Header() {
+  const { isLoading, isError, data } = useQuery("authTypedd", useraccess);
+
+  if (isLoading) return <div>Loading...</div>;
+  if (isError) return <div>Error fetching data</div>;
+
+  const authType = data?.authType;
+
   return (
     <HeaderContainer>
       <WriteButtonContainer>
         {/* TODO : 관리자 여부에 따라 visible 여부 달라짐 */}
-        <StyledLink to="/article">
-          <WriteButton>글쓰기</WriteButton>
-        </StyledLink>
+        {authType === "ADMIN" && (
+          <StyledLink to="/article">
+            <WriteButton>글쓰기</WriteButton>
+          </StyledLink>
+        )}
       </WriteButtonContainer>
       <StyledLink to="/">
         <Logo>NEWNATION</Logo>
