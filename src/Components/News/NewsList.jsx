@@ -4,10 +4,7 @@ import { getMainPage } from "../../APIS/news";
 import { useQuery } from "react-query";
 import { Link } from "react-router-dom";
 
-function NewsList() {
-  const { isLoading, isError, data } = useQuery("mainPage", getMainPage);
-  console.log(data);
-
+function NewsList({data}) {
   return (
     <BoxContainer>
       {data?.map((item) => {

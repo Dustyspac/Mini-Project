@@ -1,35 +1,38 @@
 import React from "react";
 import styled from "styled-components";
+import { useNavigate, Link } from 'react-router-dom';
 
 function Navbar() {
+  const navigate = useNavigate()
+  // const handleAllClick =()=>{}
   return (
     <NavBarContainer>
       <LinkContainer>
         <TitleBox>
-          <p5>전체</p5>
+          <Link to="/category?category=ALL">전체</Link>
           {/* 기능구현 이후 CustomLink로 변경 예정 */}
         </TitleBox>
         <TitleBox>
-          <p5>사회</p5>
+          <Link to="/category?category=SOCIETY">사회</Link>
           {/* 기능구현 이후 CustomLink로 변경 예정 */}
         </TitleBox>
         <TitleBox>
-          <p5>환경</p5>
+          <Link to="/category?category=ENVIRONMENT">환경</Link>
           {/* 기능구현 이후 CustomLink로 변경 예정 */}
         </TitleBox>
         <TitleBox>
-          <p5>테크</p5>
+          <Link to="/category?category=TECH">테크</Link>
           {/* 기능구현 이후 CustomLink로 변경 예정 */}
         </TitleBox>
         <TitleBox>
-          <p5>기타</p5>
+          <Link to="/category?category=ETC">기타</Link>
           {/* 기능구현 이후 CustomLink로 변경 예정 */}
         </TitleBox>
       </LinkContainer>
     </NavBarContainer>
   );
 }
-
+// https://baekwon.site/api/article/category?category=TECH
 export default Navbar;
 
 const TitleBox = styled.div`
