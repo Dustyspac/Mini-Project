@@ -1,5 +1,10 @@
-import React, { Fragment } from 'react'
+import React, { Fragment, useState } from 'react'
+import { useMutation } from 'react-query'
 import styled from 'styled-components'
+import { authsignin } from '../../APIS/auth';
+import {useDispatch} from 'react-redux';
+import {userActions} from '../../Redux/modules/user';
+import { useNavigate } from 'react-router-dom';
 
 const Container = styled.div`
   height: 100%;
@@ -49,17 +54,48 @@ const DecorationDiv = styled.div`
   color: #141414;
 `
 function SignInForm() {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const [form, setForm] = useState({
+    email:'',
+    password:'',
+  });
+
+  const {email, password} = form;
+
+  const onChangeForm = (e) => {
+    setForm((prev)=> ({
+      ...prev,
+      [e.target.id]: e.target.value,
+    }));
+  }
+
+  const {mutate:loginMutation} = useMutation(authsignin,{
+    onSuccess: response => {
+      window.sessionStorage.setItem('ACCESS_TOKEN', response.token);
+      console.log(response);
+      alert('로그인 성공 ><');
+      dispatch(userActions.login());
+    },onError:(error) => {
+      alert(`이메일은 ${error.response.data.data.email}. 비밀번호는 ${error.response.data.data.password}.`);
+    }
+  })
+
+  const onHandleClickLogin = () => {
+    loginMutation(form);
+}
+
   return (
     <Fragment>
       <Container>
         <H1>NEWNATION</H1>
         <Line></Line>
         <InputBox>
-        <Input type="text" placeholder='이메일'/>
-        <Input type="text" placeholder='비밀번호'/>
+        <Input  type="text" onChange={onChangeForm} id='email' value={email} placeholder='이메일'/>
+        <Input type="text" onChange={onChangeForm} id='password' value={password} placeholder='비밀번호'/>
         </InputBox>
-        <LogInBtn>로그인</LogInBtn>
-        <DecorationDiv>회원가입하기</DecorationDiv>
+        <LogInBtn onClick={onHandleClickLogin}>로그인</LogInBtn>
+        <DecorationDiv onClick={()=>{navigate('/register')}}>회원가입하기</DecorationDiv>
       </Container>
     </Fragment>
   )
