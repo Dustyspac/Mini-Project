@@ -1,5 +1,9 @@
 import React, { Fragment } from 'react'
 import styled from 'styled-components'
+import { authsignup } from '../../APIS/auth';
+import { useMutation } from 'react-query'
+import {useNavigate} from 'react-router-dom';
+
 
 
 const Container = styled.div`
@@ -45,18 +49,35 @@ const H1 = styled.h1`
 
 
 function SignUpForm() {
+  const navigate = useNavigate();
+  const [email, setUseremail] = React.useState('');
+  const [password, setPassword] = React.useState('');
+  const [nickname, setNickname] = React.useState('');
+  const {mutate: singupMutaion} = useMutation(authsignup,{
+    onSuccess:() =>{
+      alert('회원가입 성공');
+      navigate('/login');
+    },onError:(error) => {
+      alert(error.request.responseText);
+    }
+  })
+
+  const HandleSignup = () => {
+    singupMutaion({email,password,nickname})
+  }
+  
   return (
     <Fragment>
       <Container>
         <H1>NEW-<br></br>NATION</H1>
         <InputBox>
-        <Input type="text" placeholder='이메일'/>
-        <Input type="text" placeholder='비밀번호'/>
-        <Input type="text" placeholder='비밀번호 확인'/>
-        <Input type="text" placeholder='닉네임'/>
+        <Input type="text" value={email} onChange={(e)=>{setUseremail(e.target.value)}} placeholder='이메일'/>
+        <Input type="text" value={password} onChange={(e)=>{setPassword(e.target.value)}} placeholder='비밀번호(영어 대소문자, 숫자, 특수문자를 포함한 8~15자리)'/>
+        <Input type="text" value={password} onChange={(e)=>{}} placeholder='비밀번호 확인'/>
+        <Input type="text" value={nickname} onChange={(e)=>{setNickname(e.target.value)}} placeholder='닉네임'/>
         </InputBox>
-        <HoverBtn>가입하기</HoverBtn>
-        <HoverBtn>로그인</HoverBtn>
+        <HoverBtn onClick={HandleSignup}>가입하기</HoverBtn>
+        <HoverBtn onClick={()=>{navigate('/login')}}>로그인</HoverBtn>
       </Container>
     </Fragment>
   )
