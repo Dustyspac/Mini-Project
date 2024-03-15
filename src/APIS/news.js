@@ -6,19 +6,30 @@ const Axios = axios.create({
 });
 
 // MainPage 조회
-const getMainPage = async () => {
+export const getMainPage = async () => {
   const { data } = await Axios.get("").catch((err) => console.log(err));
-  console.log(data);
   return data;
 };
 
-export const getNewsDetail = async (articleId) => {
+// CategoryPage 조회
+export const getCategoryPage = async (category) => {
   try {
-    const res = await Axios.get(`/${articleId}`);
-    return res.data;
-  } catch (err) {
-    console.log(err);
+    const { data } = await Axios.get(`/category`, {
+      params: {
+        category: category,
+      },
+    });
+    return data;
+  } catch (error) {
+    console.error("Error fetching data:", error);
+    throw error;
   }
+}
+
+
+export const getNewsDetail = async (articleId) => {
+  const { data } = await Axios.get(`/${articleId}`)
+  console.log("111111111",data)
+  return data;
 };
 
-export { getMainPage };

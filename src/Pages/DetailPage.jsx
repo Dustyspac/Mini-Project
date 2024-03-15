@@ -1,43 +1,60 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Header from "../Components/Common/Header";
-import NewsBox from "../Components/News/NewsBox";
 import styled from "styled-components";
+import { getNewsDetail } from "../APIS/news";
+import { useNavigate, useParams } from "react-router-dom";
+import { useQuery } from "react-query";
 
 function DetailPage() {
+
+const [ news, setNews] = useState(null);
+const params = useParams();
+
+// const { isLoading, isError, data} = useQuery("detailKey",()=>getNewsDetail(params.articleId))
+// console.log('222222222222',data)
+const { isLoading, isError, data} = useQuery("detailKey",getNewsDetail)
+
+// useEffect(()=>{
+//   const check = data?.find(item => item.id === params.articleId);
+//   setNews(check);
+//   console.log('ddd',check);
+// },[data,params.articleId,isLoading,isError])
+
+
+
+
+// const navigate = useNavigate();
+// const [ detail, setDetail ] = useState()
+
+// useEffect(() => {
+//   (async () => {
+//   const res = await getNewsDetail(articleId)
+// setDetail(res)})()
+// }, [articleId])
+// console.log(detail);
+
+//   const HandleGoback = () => {
+//     navigate("/");
+//   };
+
+
   return (
     <>
-      <Header />
+    
+      {/* <Header key={articleId}/>
       <Container>
         <TitleBox>
-          <p className="Category">테크</p>
+          <p className="Category">{category}</p>
           <div className="InboxContents">
-            <h2 className="title">개발자들의 취업 성지 "원티드랩"</h2>
-            <p>업로드 날짜 : 24.03.12</p>
+            <h2 className="title">{title}</h2>
+            <p>{createdAt}</p>
           </div>
         </TitleBox>
       </Container>
-      <NewsImg>
-        <NewsBox />
-      </NewsImg>
       <NewsContents>
-        <h3>What is Lorem Ipsum? </h3>
-        <p>
-          <br />
-          Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-          <br />
-          Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
-          <br />
-          when an unknown printer took a galley of type and scrambled it to make a type specimen book.
-          <br />
-          It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.
-          <br />
-          It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages,
-          <br />
-          and more recently with desktop publishing software like Aldus PageMaker
-          <br />
-          including versions of Lorem Ipsum.
-        </p>
-      </NewsContents>
+      <p>{content}</p>
+      <button onClick={HandleGoback}>돌아가기</button>
+      </NewsContents> */}
     </>
   );
 }
