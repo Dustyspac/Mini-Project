@@ -35,6 +35,7 @@ const InputBox = styled.div`
   justify-content: center;
   flex-direction: column;
 `;
+
 const Input = styled.input`
   height: 54px;
   margin-top: 17px;
