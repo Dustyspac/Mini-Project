@@ -3,7 +3,7 @@ import request from "../APIS/Axios/api";
 
 const Axios = axios.create({
   // API 통신을 위해 axios 인스턴스 생성
-  baseURL: "https://baekwon.site/api/article", // 기본이 되는 api 주소 (JSON 서버)
+  baseURL: `${process.env.REACT_APP_SERVER_URL}/api/article`, // 기본이 되는 api 주소 (JSON 서버)
 });
 
 // MainPage 조회
