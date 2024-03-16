@@ -1,19 +1,36 @@
 import React, { useEffect, useState } from "react";
 import Header from "../Components/Common/Header";
 import styled from "styled-components";
-import { getNewsDetail } from "../APIS/news";
+import { deleteNews, getNewsDetail } from "../APIS/news";
 import { useNavigate, useParams } from "react-router-dom";
-import { useQuery } from "react-query";
+import { useMutation, useQuery, useQueryClient } from "react-query";
 
 function DetailPage() {
+  const queryClient = useQueryClient();
   const navigate = useNavigate();
   const params = useParams();
   console.log("articleId", params.articleId);
-  const { isLoading, isError, data } = useQuery("detailKey", () => getNewsDetail(params.articleId));
-  console.log("data7777777777", data);
+  const { isLoading, isError, data } = useQuery("detailKey", () =>
+    getNewsDetail(params.articleId)
+  );
+  // console.log("data7777777777", data);
 
-  console.log("isLoding", isLoading);
-  console.log("isError", isError);
+  // console.log("isLoding", isLoading);
+  // console.log("isError", isError);
+
+  const deleteMutation = useMutation((articleId) => deleteNews(articleId), {
+    onSuccess: () => {
+      queryClient.invalidateQueries("detailKey");
+      navigate("/");
+    },
+    onError: (err) => {
+      console.log(err);
+    },
+  });
+
+  const handleNewsDelete = (id) => {
+    deleteMutation.mutate(id);
+  };
 
   if (isLoading) return <div>Loading...</div>;
   if (isError) return <div>Error fetching data</div>;
@@ -26,13 +43,20 @@ function DetailPage() {
     <>
       <Header />
       <Container>
-          <div className="InboxContents">
+        <div className="InboxContents">
           <p className="Category">{data?.category}</p>
-            <h2 className="title">{data?.title}</h2>
-            <p>{data.createdAt}</p>
-        <Button>삭제</Button>
-        <Button>수정</Button>
-          </div>
+          <h2 className="title">{data?.title}</h2>
+          <p>{data.createdAt}</p>
+          <Button
+            onClick={(e) => {
+              e.preventDefault();
+              handleNewsDelete(data.articleId);
+            }}
+          >
+            삭제
+          </Button>
+          <Button>수정</Button>
+        </div>
       </Container>
       <NewsContents>
         <Img src={`${data.imgUrl}`} alt="썸네일" />
@@ -73,8 +97,8 @@ const Container = styled.div`
   background-color: white;
   display: flex;
   justify-content: center;
-  
-  .InboxContents{
+
+  .InboxContents {
     width: fit-content;
     text-align: center;
     font-weight: bold;
@@ -82,9 +106,7 @@ const Container = styled.div`
   }
 `;
 
-const TitleBox = styled.div`
-
-`;
+const TitleBox = styled.div``;
 
 const NewsContents = styled.div`
   width: 1100px;
