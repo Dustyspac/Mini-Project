@@ -5,30 +5,35 @@ import styled from "styled-components";
 import { Link, useNavigate } from "react-router-dom";
 import { useQuery } from "react-query";
 import { useraccess } from "../../APIS/auth";
+import { useDispatch, useSelector } from 'react-redux';
+import { clearAuthInfo} from '../../Redux/modules/user';
 
 function Header() {
   const navigate = useNavigate();
-  const { isLoading, isError, data } = useQuery(
-    "checkAuthType",
-    useraccess
-    // {
-    //   onSuccess: (res) => {
-    //     console.log(res);
-    //   },
-    //   onError: (err) => {
-    //     console.log("aaaaaaaaaaaaa", err);
-    //   },
-    // }
-  );
+  const dispatch = useDispatch();
+  const authType = useSelector(state=> state.user.authType)
+  // const { isLoading, isError, data } = useQuery(
+  //   "checkAuthType",
+  //   useraccess
+  //   // {
+  //   //   onSuccess: (res) => {
+  //   //     console.log(res);
+  //   //   },
+  //   //   onError: (err) => {
+  //   //     console.log("aaaaaaaaaaaaa", err);
+  //   //   },
+  //   // }
+  // );
 
-  if (isLoading) return <div>Loading...</div>;
-  if (isError) return <div>Error fetching data</div>;
+  // if (isLoading) return <div>Loading...</div>;
+  // if (isError) return <div>Error fetching data</div>;
 
-  const authType = data?.authType;
+  // const authType = data?.authType;
 
   const logout = () => {
-    // window.sessionStorage.removeItem("ACCESS_TOKEN");
-    // navigate("/login");
+    window.sessionStorage.clear();
+    dispatch(clearAuthInfo());
+    navigate("/login");
   };
 
   return (
