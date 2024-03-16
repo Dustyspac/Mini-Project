@@ -1,5 +1,5 @@
 import axios from "axios";
-import request from '../APIS/Axios/api';
+import request from "../APIS/Axios/api";
 
 const Axios = axios.create({
   // API 통신을 위해 axios 인스턴스 생성
@@ -25,11 +25,14 @@ export const getCategoryPage = async (category) => {
     console.error("Error fetching data:", error);
     throw error;
   }
-}
-
+};
 
 export const getNewsDetail = async (articleId) => {
-  const { data } = await request.get(`/api/article/${articleId}`)
+  const { data } = await request.get(`/api/article/${articleId}`);
   return data;
 };
 
+// 게시글 delete
+export const deleteNews = async (articleId) => {
+  await request.delete(`/api/article/${articleId}`);
+};
