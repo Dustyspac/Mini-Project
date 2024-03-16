@@ -7,59 +7,51 @@ import { useQuery } from "react-query";
 
 function DetailPage() {
 
-const [ news, setNews] = useState(null);
-const params = useParams();
+  const navigate = useNavigate();
+  const params = useParams();
+  console.log('articleId', params.articleId)
+  const {isLoading,isError,data} = useQuery("detailKey",()=>getNewsDetail(params.articleId))
+  console.log('data7777777777',data);
+  
+  
+  console.log('isLoding', isLoading);
+  console.log('isError', isError);
 
-// const { isLoading, isError, data} = useQuery("detailKey",()=>getNewsDetail(params.articleId))
-// console.log('222222222222',data)
-const { isLoading, isError, data} = useQuery("detailKey",getNewsDetail)
+  if (isLoading) return <div>Loading...</div>;
+  if (isError) return <div>Error fetching data</div>;
 
-// useEffect(()=>{
-//   const check = data?.find(item => item.id === params.articleId);
-//   setNews(check);
-//   console.log('ddd',check);
-// },[data,params.articleId,isLoading,isError])
-
-
-
-
-// const navigate = useNavigate();
-// const [ detail, setDetail ] = useState()
-
-// useEffect(() => {
-//   (async () => {
-//   const res = await getNewsDetail(articleId)
-// setDetail(res)})()
-// }, [articleId])
-// console.log(detail);
-
-//   const HandleGoback = () => {
-//     navigate("/");
-//   };
+  const handleGoback = () => {
+    navigate("/");
+  };
 
 
   return (
     <>
-    
-      {/* <Header key={articleId}/>
+      <Header />
       <Container>
         <TitleBox>
-          <p className="Category">{category}</p>
+          <button>삭제</button>
+          <button>수정</button>
+          <p className="Category">{data?.category}</p>
           <div className="InboxContents">
-            <h2 className="title">{title}</h2>
-            <p>{createdAt}</p>
+            <h2 className="title">{data?.title}</h2>
+            <p>{data.createdAt}</p>
           </div>
         </TitleBox>
       </Container>
+      <ImageWrap>
+        <img src={`${data.imgUrl}`} alt="썸네일"/>
+      </ImageWrap>
       <NewsContents>
-      <p>{content}</p>
-      <button onClick={HandleGoback}>돌아가기</button>
-      </NewsContents> */}
+      <p>{data.content}</p>
+      <button onClick={handleGoback}>돌아가기</button>
+      </NewsContents>
     </>
   );
 }
 
 export default DetailPage;
+
 
 const Container = styled.div`
   width: 3500px;
@@ -80,13 +72,22 @@ const TitleBox = styled.div`
   margin-right: 970px;
 `;
 
-const NewsImg = styled.div`
-  margin-top: 20px;
-  display: flex;
-  justify-content: center;
+const ImageWrap = styled.div`
+display: flex;
+justify-content: center;
+
+.img {
+width: 50%;
+height: 50%;
+}
 `;
 
 const NewsContents = styled.div`
+  width: 1000px;
+  display: contents;
+  justify-content: center;
   margin-top: 20px;
   text-align: center;
-`;
+
+
+  `
