@@ -74,6 +74,7 @@ function SignInForm() {
       window.sessionStorage.setItem('ACCESS_TOKEN', response.token);
       console.log(response);
       alert('로그인 성공 ><');
+      navigate('/')
     },onError:(error) => {
       alert(`이메일은 ${error.response.data.data.email}. 비밀번호는 ${error.response.data.data.password}.`);
     }
@@ -86,11 +87,13 @@ function SignInForm() {
   return (
     <Fragment>
       <Container>
-        <H1>NEWNATION</H1>
+        <H1 onClick={()=>{
+          navigate('/')
+        }}>NEWNATION</H1>
         <Line></Line>
         <InputBox>
         <Input  type="text" onChange={onChangeForm} id='email' value={email} placeholder='이메일'/>
-        <Input type="text" onChange={onChangeForm} id='password' value={password} placeholder='비밀번호'/>
+        <Input type="password" onChange={onChangeForm} id='password' value={password} placeholder='비밀번호'/>
         </InputBox>
         <LogInBtn onClick={onHandleClickLogin}>로그인</LogInBtn>
         <DecorationDiv onClick={()=>{navigate('/register')}}>회원가입하기</DecorationDiv>
