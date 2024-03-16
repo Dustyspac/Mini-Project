@@ -36,11 +36,16 @@ function AddNewsForm() {
     console.log("formData", formData);
     // image post
     try {
-      const response = await request.post(`/api/article/img`, formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
+      const response = await request.post(
+        `/api/article/img`,
+        formData,
+        {
+          headers: {
+            // Authorization: "",
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
       if (response.status === 200) {
         // alert("성공적");
         setNewsData({ ...newsData, imgUrl: response.data.imgUrl }); //data.imgUrl 추가 안 함
@@ -68,10 +73,6 @@ function AddNewsForm() {
 
   // 전체 내용 post
   const handleSubmitClick = async () => {
-    // if (title === "" || content === "" || img === "") {
-    //   alert("제목, 내용, 이미지 URL을 모두 입력해주세요.");
-    //   return;
-    // }
     try {
       const newPost = {
         title: newsData.title,
@@ -79,12 +80,12 @@ function AddNewsForm() {
         category: newsData.category.value,
         content: newsData.content,
       };
-      const response = await request.post(`/api/article`, newPost, {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-      if (response.status === 201) {
+      const response = await request.post(
+        "/api/article",
+        newPost,
+        { withCredentials: true }
+      );
+      if (response.status === 200) {
         alert("성공적");
         initFunc();
       }
@@ -94,6 +95,7 @@ function AddNewsForm() {
       console.log("전체요청 에러발생", error);
     }
   };
+
   const handleSelectChange = (selectedOption) => {
     const selectedCategory = options.find(
       (option) => option.value === selectedOption.value
