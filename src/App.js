@@ -1,4 +1,5 @@
 import Router from "./Shared/router"
+import Footer from './Components/Common/Footer';
 import { useQuery } from 'react-query';
 import { useraccess } from './APIS/auth';
 import { useNavigate } from 'react-router-dom';
@@ -32,7 +33,10 @@ function App() {
 
 
   return (
+    <>
       <Router />
+      <Footer />
+      </>
   );
 }
 

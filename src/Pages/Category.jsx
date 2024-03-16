@@ -5,25 +5,24 @@ import { useQuery } from "react-query";
 import { NewsList } from "../Components/News/NewsList";
 import { getCategoryPage } from "../APIS/news";
 import styled from "styled-components";
-import { useSearchParams } from 'react-router-dom';
+import { useSearchParams } from "react-router-dom";
 
 function Category() {
-  const [searchParams] = useSearchParams()
-  const category = searchParams.get('category')
+  const [searchParams] = useSearchParams();
+  const category = searchParams.get("category");
 
-  const { data, isLoading, isError } = useQuery(['category', category], () => getCategoryPage(category));
-  console.log(searchParams.get('category'))
+  const { data, isLoading, isError } = useQuery(["category", category], () => getCategoryPage(category));
+  console.log(searchParams.get("category"));
 
-if (isLoading) return <div>Loading...</div>;
-if (isError) return <div>Error fetching data</div>;
+  if (isLoading) return <div>Loading...</div>;
+  if (isError) return <div>Error fetching data</div>;
   return (
     <>
-    {/* 조건을 줘야할 듯 */}
       <Header />
       <Navbar />
-      <Toggle>
-         <p2 className="CurrentCategory">{category}</p2>
-      </Toggle>
+        <ToggleBox>
+           <p className="CurrentCategory">{category}</p>
+        </ToggleBox>
       <NewsListWrapper>
         <NewsList data={data} />
       </NewsListWrapper>
@@ -34,22 +33,26 @@ if (isError) return <div>Error fetching data</div>;
 export default Category;
 
 const NewsListWrapper = styled.div`
+  width: 100%;
+  display: flex;
   margin-top: 10px;
 `;
 
-const Toggle = styled.div`
-  margin-bottom: 30px;
-  margin-left: 660px;
-  margin-top: 60px;
-  width: 120px;
-  height: 30px;
+const ToggleBox = styled.div`
+  width: 130px;
+  height: 40px;
   padding: 10px;
   border: 1px solid black;
   background-color: #eae7de;
-  text-align: center;
+  display: flex;
+  justify-content: center;
+  margin-top: 8px;
+  margin-left: 220px;
 
   .CurrentCategory {
+    text-align: center;
     font-weight: bolder;
     font-size: 18px;
+    margin: auto;
   }
 `;

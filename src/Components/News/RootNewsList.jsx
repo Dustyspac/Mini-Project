@@ -1,10 +1,12 @@
-import React from "react";
+import React from 'react'
 import styled from "styled-components";
-import { getMainPage } from "../../APIS/news";
-import { useQuery } from "react-query";
 import { Link } from "react-router-dom";
+import { useQuery } from "react-query";
+import {getMainPage} from '../../APIS/news'
 
-function NewsList({data}) {
+function RootNewsList() {
+  const {isLoading, isError, data}=useQuery('rootNewsList',getMainPage)
+  console.log('data', data)
   return (
     <BoxContainer>
       {data?.map((item) => {
@@ -27,10 +29,10 @@ function NewsList({data}) {
         );
       })}
     </BoxContainer>
-  );
+  )
 }
 
-export { NewsList };
+export default RootNewsList
 
 const BoxContainer = styled.div`
   margin-left: 200px;
@@ -51,9 +53,11 @@ const CustomLink = styled(Link)`
     color: black;
   }
 `;
+
 const Text = styled.p`
   margin-left: 20px;
 `;
+
 const Box = styled.div`
   border: 1px solid black;
   position: relative;

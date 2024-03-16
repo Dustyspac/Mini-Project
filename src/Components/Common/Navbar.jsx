@@ -9,23 +9,23 @@ function Navbar() {
     <NavBarContainer>
       <LinkContainer>
         <TitleBox>
-          <Link to="/category?category=ALL">전체</Link>
+          <CustomLink to="/category?category=ALL">전체</CustomLink>
           {/* 기능구현 이후 CustomLink로 변경 예정 */}
         </TitleBox>
         <TitleBox>
-          <Link to="/category?category=SOCIETY">사회</Link>
+          <CustomLink to="/category?category=SOCIETY">사회</CustomLink>
           {/* 기능구현 이후 CustomLink로 변경 예정 */}
         </TitleBox>
         <TitleBox>
-          <Link to="/category?category=ENVIRONMENT">환경</Link>
+          <CustomLink to="/category?category=ENVIRONMENT">환경</CustomLink>
           {/* 기능구현 이후 CustomLink로 변경 예정 */}
         </TitleBox>
         <TitleBox>
-          <Link to="/category?category=TECH">테크</Link>
+          <CustomLink to="/category?category=TECH">테크</CustomLink>
           {/* 기능구현 이후 CustomLink로 변경 예정 */}
         </TitleBox>
         <TitleBox>
-          <Link to="/category?category=ETC">기타</Link>
+          <CustomLink to="/category?category=ETC">기타</CustomLink>
           {/* 기능구현 이후 CustomLink로 변경 예정 */}
         </TitleBox>
       </LinkContainer>
@@ -34,6 +34,16 @@ function Navbar() {
 }
 // https://baekwon.site/api/article/category?category=TECH
 export default Navbar;
+
+const CustomLink = styled(Link)`
+  margin-top: 20px;
+  color: black;
+  text-decoration: none;
+  font-size: 18px;
+  &:visited {
+    color: black;
+  }
+`;
 
 const TitleBox = styled.div`
   font-weight: bold;
