@@ -10,11 +10,13 @@ import AddNews from "../Pages/AddNews";
 
 const Router = () => {
   const isAuthenticated = useSelector(state => state.user.isAuthenticated);
+
   return (
       <Routes>
         <Route path="/" element={<MainPage />} />
         <Route path="/:category" element={<Category />} />
-        <Route path="/:articleId" element={<DetailPage />} />
+        <Route path="/article/:articleId" element={<DetailPage />} />
+        {/* {!isAuthenticated && <Route path="/article/:articleId" element={<DetailPage />} />} */}
         {/* <Route path='/register' element={<SignUpForm/>}/>
         <Route path='/login' element={<SignInForm/>}/> */}
         {!isAuthenticated && <Route path="/login" element={<SignInForm />} />}
@@ -25,3 +27,4 @@ const Router = () => {
 };
 
 export default Router;
+ 

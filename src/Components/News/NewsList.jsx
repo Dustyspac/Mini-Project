@@ -12,7 +12,7 @@ function NewsList({data}) {
           <Box key={item.articleId}>
             <div className="Contents">
               <ImageBox />
-              <CustomLink to={`/${item.articleId}`} key={item.articleId}>
+              <CustomLink to={`/article/${item.articleId}`} key={item.articleId}>
                 <p>상세보기</p>
               </CustomLink>
               <Contents>

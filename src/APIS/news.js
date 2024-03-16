@@ -1,4 +1,5 @@
 import axios from "axios";
+import request from '../APIS/Axios/api';
 
 const Axios = axios.create({
   // API 통신을 위해 axios 인스턴스 생성
@@ -28,8 +29,7 @@ export const getCategoryPage = async (category) => {
 
 
 export const getNewsDetail = async (articleId) => {
-  const { data } = await Axios.get(`/${articleId}`)
-  console.log("111111111",data)
+  const { data } = await request.get(`/api/article/${articleId}`)
   return data;
 };
 
