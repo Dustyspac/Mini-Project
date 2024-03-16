@@ -4,6 +4,10 @@ import styled from "styled-components";
 
 const FooterStyled = styled.footer`
   padding: 1.5rem 0;
+  margin-top: 120px;
+  bottom: 0;
+  width: 100%;
+
 
   .footer_wrapper,
   .copyright {

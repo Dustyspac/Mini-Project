@@ -6,16 +6,14 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useQuery } from "react-query";
 
 function DetailPage() {
-
   const navigate = useNavigate();
   const params = useParams();
-  console.log('articleId', params.articleId)
-  const {isLoading,isError,data} = useQuery("detailKey",()=>getNewsDetail(params.articleId))
-  console.log('data7777777777',data);
-  
-  
-  console.log('isLoding', isLoading);
-  console.log('isError', isError);
+  console.log("articleId", params.articleId);
+  const { isLoading, isError, data } = useQuery("detailKey", () => getNewsDetail(params.articleId));
+  console.log("data7777777777", data);
+
+  console.log("isLoding", isLoading);
+  console.log("isError", isError);
 
   if (isLoading) return <div>Loading...</div>;
   if (isError) return <div>Error fetching data</div>;
@@ -24,27 +22,22 @@ function DetailPage() {
     navigate("/");
   };
 
-
   return (
     <>
       <Header />
       <Container>
-        <TitleBox>
-          <button>삭제</button>
-          <button>수정</button>
-          <p className="Category">{data?.category}</p>
           <div className="InboxContents">
+          <p className="Category">{data?.category}</p>
             <h2 className="title">{data?.title}</h2>
             <p>{data.createdAt}</p>
+        <Button>삭제</Button>
+        <Button>수정</Button>
           </div>
-        </TitleBox>
       </Container>
-      <ImageWrap>
-        <img src={`${data.imgUrl}`} alt="썸네일"/>
-      </ImageWrap>
       <NewsContents>
-      <p>{data.content}</p>
-      <button onClick={handleGoback}>돌아가기</button>
+        <Img src={`${data.imgUrl}`} alt="썸네일" />
+        <p>{data.content}</p>
+        <Button onClick={handleGoback}>돌아가기</Button>
       </NewsContents>
     </>
   );
@@ -52,9 +45,27 @@ function DetailPage() {
 
 export default DetailPage;
 
+const Button = styled.button`
+  all: unset;
+  width: 70px;
+  height: 30px;
+  border: 1px solid #141414;
+  /* display: none; */
+  text-align: center;
+  cursor: pointer;
+  &:hover {
+    background-color: #ccc8aa;
+  }
+`;
+
+const Img = styled.img`
+  width: 800px;
+  height: auto;
+  margin-top: 10px;
+`;
 
 const Container = styled.div`
-  width: 3500px;
+  width: 100%;
   height: 250px;
   margin-top: 30px;
   border-top: 1px solid black;
@@ -62,32 +73,24 @@ const Container = styled.div`
   background-color: white;
   display: flex;
   justify-content: center;
+  
+  .InboxContents{
+    width: fit-content;
+    text-align: center;
+    font-weight: bold;
+    margin-top: 30px;
+  }
 `;
 
 const TitleBox = styled.div`
-  width: fit-content;
-  margin-top: 45px;
-  font-weight: bold;
-  text-align: center;
-  margin-right: 970px;
-`;
 
-const ImageWrap = styled.div`
-display: flex;
-justify-content: center;
-
-.img {
-width: 50%;
-height: 50%;
-}
 `;
 
 const NewsContents = styled.div`
-  width: 1000px;
-  display: contents;
-  justify-content: center;
+  width: 1100px;
   margin-top: 20px;
   text-align: center;
-
-
-  `
+  margin: auto;
+  font-size: 15px;
+  line-height: 24px;
+`;

@@ -12,23 +12,6 @@ function Header() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const authType = useSelector(state=> state.user.authType)
-  // const { isLoading, isError, data } = useQuery(
-  //   "checkAuthType",
-  //   useraccess
-  //   // {
-  //   //   onSuccess: (res) => {
-  //   //     console.log(res);
-  //   //   },
-  //   //   onError: (err) => {
-  //   //     console.log("aaaaaaaaaaaaa", err);
-  //   //   },
-  //   // }
-  // );
-
-  // if (isLoading) return <div>Loading...</div>;
-  // if (isError) return <div>Error fetching data</div>;
-
-  // const authType = data?.authType;
 
   const logout = () => {
     window.sessionStorage.clear();
@@ -56,7 +39,7 @@ function Header() {
         </IconBox>
         {/* TODO : 로그인 하면 로그아웃 버튼으로 바껴야됨 */}
         {authType ? (
-          <button onClick={logout}>로그아웃</button>
+          <Button onClick={logout}>로그아웃</Button>
         ) : (
           <StyledLink to="/login">
             <IconBox>
@@ -106,6 +89,9 @@ const WriteButton = styled.button`
     background-color: #ccc8aa;
   }
 `;
+const Button = styled(WriteButton)`
+  width: 75px;
+`
 const IconContainer = styled.div`
   display: flex;
   justify-content: center;
