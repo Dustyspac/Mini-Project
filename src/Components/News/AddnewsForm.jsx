@@ -110,7 +110,7 @@ function AddNewsForm() {
           type="text"
           value={newsData.title}
           onChange={(e) => setNewsData({ ...newsData, title: e.target.value })}
-          placeholder="제목을 입력하세요"
+          placeholder="제목을 입력하세요" maxLength={40}
         />
         <SelectCustom
           options={options}

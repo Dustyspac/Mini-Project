@@ -1,8 +1,10 @@
 import axios from "axios";
 
 const request = axios.create({
-  baseURL: 'https://baekwon.site'
+  baseURL: `${process.env.REACT_APP_SERVER_URL}`
 });
+
+console.log(`sfsfsdfsdfs${process.env.REACT_APP_SERVER_URL}`)
 
 request.interceptors.request.use(
   
