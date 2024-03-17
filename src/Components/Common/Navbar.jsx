@@ -32,7 +32,6 @@ function Navbar() {
     </NavBarContainer>
   );
 }
-// https://baekwon.site/api/article/category?category=TECH
 export default Navbar;
 
 const CustomLink = styled(Link)`
