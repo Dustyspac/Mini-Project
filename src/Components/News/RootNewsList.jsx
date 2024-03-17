@@ -7,6 +7,14 @@ import {getMainPage} from '../../APIS/news'
 function RootNewsList() {
   const {isLoading, isError, data}=useQuery('rootNewsList',getMainPage)
   console.log('data', data)
+
+//   const limitTitle = (title, limit = 20) => {
+//     if (title.length > limit) {
+//         return title.substring(0, limit) + '...';
+//     } else {
+//         return title;
+//     }
+// };
   return (
     <BoxContainer>
       {data?.map((item) => {
@@ -18,12 +26,12 @@ function RootNewsList() {
                 <Text>상세보기</Text>
               </CustomLink>
               <Contents>
-                <h2 className="title">{item.title}</h2>
-                <div className="InboxContents">
+              <h2 className="title">{(item.title)}</h2>
+              </Contents>
+                <InboxContents> 
                   <p>{item.createdAt}</p>
                   <p className="Category">{item.category}</p>
-                </div>
-              </Contents>
+                </InboxContents>
             </div>
           </Box>
         );
@@ -35,9 +43,7 @@ function RootNewsList() {
 export default RootNewsList
 
 const BoxContainer = styled.div`
-  margin-left: 200px;
-  margin-right: 200px;
-  margin-top: 5px;
+  padding: 30px 0 0 0;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
@@ -62,6 +68,8 @@ const Box = styled.div`
   border: 1px solid black;
   position: relative;
   width: 400px;
+  height: 500px;
+  overflow: hidden;
   height: fit-content;
 `;
 
@@ -74,23 +82,35 @@ const ImageBox = styled.div`
   background-size: 400px 300px;
 `
 
+
 const Contents = styled.div`
-  margin-top: 22px;
-  margin-left: 20px;
-  margin-right: 40px;
-
+  display: flex;
+  justify-content: center;
+  padding: 0 20px;
+  
   .title {
-    margin-top: 0%;
-    margin-bottom: 5px;
-  }
-
-  .InboxContents {
-    display: flex;
-    justify-content: space-between;
-  }
-
-  .Category {
-    color: #ff6b00;
-    font-weight: bold;
+    text-overflow: ellipsis;
+    height: 66px;
+    width: 100%;
+    overflow: hidden;
+    -webkit-line-clamp: 2;
+    word-break: break-word;
+    -webkit-box-orient: vertical;
+    display: -webkit-box;
   }
 `;
+
+const InboxContents = styled.div`
+    bottom: 10px;
+    display: flex;
+    justify-content: space-between;
+    padding: 0 20px;
+
+  
+
+    .Category {
+    color: #ff6b00;
+    font-weight: bold;
+    bottom: 10px;
+  }
+`

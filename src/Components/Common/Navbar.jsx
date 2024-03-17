@@ -47,8 +47,8 @@ const CustomLink = styled(Link)`
 const TitleBox = styled.div`
   font-weight: bold;
   text-align: center;
-  margin-left: 100px;
-  margin-right: 100px;
+  justify-content: center;
+
 `;
 
 const NavBarContainer = styled.div`
@@ -63,4 +63,10 @@ const LinkContainer = styled.div`
   display: flex;
   justify-content: center;
   margin-top: 30px;
+  ${TitleBox}{
+    width: 100px;
+    &:not(:last-child){
+      margin-right: 20px;
+    }
+  }
 `;

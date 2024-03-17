@@ -4,6 +4,8 @@ const request = axios.create({
   baseURL: `${process.env.REACT_APP_SERVER_URL}`,
 });
 
+console.log(`sfsfsdfsdfs${process.env.REACT_APP_SERVER_URL}`)
+
 request.interceptors.request.use(
   function (config) {
     console.log(config);
