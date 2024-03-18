@@ -5,7 +5,21 @@
 
 ### 서비스 설명
 ###### 매일 올라오는 수많은 정보들을 추려서 세상 돌아가는 이야기를 알려주는 곳이 없을까?
-##### 데일리 이슈를 매일 2~3개씩 업로드 해주는 뉴스레터   
+#### 데일리 이슈를 매일 2~3개씩 업로드 해주는 뉴스레터   
+
+-----
+
+<details>
+<summary>Presentation Img</summary>   
+<img src="https://i.ibb.co/3vn5dCX/Intro-2x.png" alt="Intro-2x" border="0">   
+<img src="https://i.ibb.co/SKdsf8h/FE-preview-2x.png" alt="FE-preview-2x" border="0">   
+<img src="https://i.ibb.co/87LRG4Y/BE-preview-2x.png" alt="BE-preview-2x" border="0">   
+<img src="https://i.ibb.co/51VTHGw/TS-01-2x.png" alt="TS-01-2x" border="0">   
+<img src="https://i.ibb.co/h2Snmpp/TS-02-2x.png" alt="TS-02-2x" border="0">   
+<img src="https://i.ibb.co/PZ5qLQD/TS-03-2x.png" alt="TS-03-2x" border="0">   
+<img src="https://i.ibb.co/vD90bsT/Add-2x.png" alt="Add-2x" border="0">   
+</details>   
+
 ------
 
 ### 조원 소개
@@ -50,5 +64,10 @@
 <summary>File Tree</summary>   
 <img src="https://i.ibb.co/C9VbRxL/filetree.jpg" alt="filetree" border="0">
 </details>   
+
+
+
+
+
 
 
