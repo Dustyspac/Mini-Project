@@ -102,7 +102,6 @@ function SignUpForm() {
     const newPassword = e.target.value.trim(); 
       setPassword(newPassword);
       validatePassword(newPassword);
-      console.log(password);
   }
 
 

@@ -44,7 +44,7 @@ function DetailPage() {
     imgUrl: "",
     content: "",
   });
-  console.log("newsData", newsData);
+
   const deleteMutation = useMutation((articleId) => deleteNews(articleId), {
     onSuccess: () => {
       queryClient.invalidateQueries("detailKey");
@@ -111,7 +111,6 @@ function DetailPage() {
 
   const handleEditMode = () => {
     setIsEdit(!isEdit);
-    // data를 넘겨?
     setNewsData({
       title: data.title,
       category: etcOption,

@@ -3,8 +3,6 @@ import SearchIcon from "../../Assets/search_icon.svg";
 import UserIcon from "../../Assets/user_icon.svg";
 import styled from "styled-components";
 import { Link, useNavigate } from "react-router-dom";
-import { useQuery } from "react-query";
-import { useraccess } from "../../APIS/auth";
 import { useDispatch, useSelector } from 'react-redux';
 import { clearAuthInfo} from '../../Redux/modules/user';
 
@@ -34,10 +32,8 @@ function Header() {
       </StyledLink>
       <IconContainer>
         <IconBox>
-          {/* 추후 Link로 변경 예정 */}
           <Icon src={SearchIcon} alt="searchIcon" />
         </IconBox>
-        {/* TODO : 로그인 하면 로그아웃 버튼으로 바껴야됨 */}
         {authType ? (
           <Button onClick={logout}>로그아웃</Button>
         ) : (

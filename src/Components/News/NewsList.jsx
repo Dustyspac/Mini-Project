@@ -5,13 +5,6 @@ import { useQuery } from "react-query";
 import { Link, useNavigate } from "react-router-dom";
 
 function NewsList({data}) {
-//   const limitTitle = (title, limit = 20) => {
-//     if (title.length > limit) {
-//         return title.substring(0, limit) + '...';
-//     } else {
-//         return title;
-//     }
-// };
 
   return (
     <BoxContainer>

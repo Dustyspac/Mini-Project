@@ -32,7 +32,6 @@ function AddNewsForm() {
     const formData = new FormData();
     formData.append("img", file);
 
-    console.log("formData", formData);
     // image post
     try {
       const response = await request.post(`/api/article/img`, formData, {
@@ -43,7 +42,6 @@ function AddNewsForm() {
       if (response.status === 200) {
         postData(response.data.imgUrl);
       }
-      console.log("response", response);
     } catch (error) {
       console.log("에러발생", error);
     }
@@ -83,7 +81,6 @@ function AddNewsForm() {
         alert("성공적");
         initFunc();
       }
-      console.log("response", response);
       navigate("/");
     } catch (error) {
       console.log("전체요청 에러발생", error);
