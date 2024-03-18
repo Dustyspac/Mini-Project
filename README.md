@@ -1,3 +1,6 @@
+# NEW NATION
+###### 항해99 주특기 프로젝트 3조
+
 <div align="center">
 <img src="https://i.ibb.co/K9M7yvy/Main-2x.jpg" alt="Main-2x" border="0">
 </div>
