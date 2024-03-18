@@ -4,6 +4,7 @@ import styled from "styled-components";
 import { deleteNews, editNews, getNewsDetail } from "../APIS/news";
 import { useNavigate, useParams } from "react-router-dom";
 import { useMutation, useQuery, useQueryClient } from "react-query";
+import { useSelector } from "react-redux";
 
 import {
   Btn,
@@ -20,6 +21,7 @@ function DetailPage() {
   const queryClient = useQueryClient();
   const navigate = useNavigate();
   const params = useParams();
+  const authType = useSelector((state) => state.user.authType);
 
   const options = [
     { value: "SOCIETY", label: "사회" },
@@ -77,8 +79,6 @@ function DetailPage() {
   const handleGoback = () => {
     navigate("/");
   };
-
-  //AddNewsForm
 
   const initFunc = () => {
     setNewsData({
@@ -146,7 +146,9 @@ function DetailPage() {
               onChange={handleSelectChange}
             />
             <Label htmlFor="imgFile">
-              {newsData.imgUrl ? "이미지는 변경 불가합니다" : "이미지를 선택해주세요"}
+              {newsData.imgUrl
+                ? "이미지는 변경 불가합니다"
+                : "이미지를 선택해주세요"}
             </Label>
             <Textarea
               type="text"
@@ -169,15 +171,19 @@ function DetailPage() {
               <p className="Category">{data?.category}</p>
               <h2 className="title">{data?.title}</h2>
               <p>{data.createdAt}</p>
-              <Button
-                onClick={(e) => {
-                  e.preventDefault();
-                  handleNewsDelete(data.articleId);
-                }}
-              >
-                삭제
-              </Button>
-              <Button onClick={handleEditMode}>수정</Button>
+              {authType === "ADMIN" && (
+                <>
+                  <Button
+                    onClick={(e) => {
+                      e.preventDefault();
+                      handleNewsDelete(data.articleId);
+                    }}
+                  >
+                    삭제
+                  </Button>
+                  <Button onClick={handleEditMode}>수정</Button>
+                </>
+              )}
             </div>
           </Container>
           <NewsContents>

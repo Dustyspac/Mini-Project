@@ -20,7 +20,6 @@ function Header() {
   return (
     <HeaderContainer>
       <WriteButtonContainer>
-        {/* TODO : 관리자 여부에 따라 visible 여부 달라짐 */}
         {authType === "ADMIN" && (
           <StyledLink to="/article">
             <WriteButton>글쓰기</WriteButton>
