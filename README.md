@@ -9,14 +9,15 @@
 ------
 
 ### 조원 소개
-- Front End
-  - 김기현(https://github.com/Dustyspac)
-  - 정예진(https://github.com/asdfg030906)
-  - 이예진(https://github.com/yeeendy)
-- Back End
-  - 김대용(https://github.com/cheesecup)
-  - 황승미(https://github.com/Seungmi97)
-  - 김엄지(https://github.com/kimeomji333)
+#### FE   
+김기현 (https://github.com/Dustyspac)   
+정예진 (https://github.com/asdfg030906)   
+이예진 (https://github.com/yeeendy)    
+
+#### BE   
+김대용 (https://github.com/cheesecup)   
+황승미 (https://github.com/Seungmi97)   
+김엄지 (https://github.com/kimeomji333)   
 
 ------
 
