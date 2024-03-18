@@ -1,5 +1,5 @@
 import React from "react";
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, Navigate } from "react-router-dom";
 import MainPage from "../Pages/MainPage";
 import DetailPage from "../Pages/DetailPage";
 import Category from "../Pages/Category";
@@ -13,9 +13,18 @@ const Router = () => {
 
   return (
       <Routes>
+         {isAuthenticated ? (
+        <>
+          <Route path="/article/:articleId" element={<DetailPage />} />
+        </>
+      ) : (
+        <>
+          <Route path="/login" element={<SignInForm />} />
+          <Route path="*" element={<Navigate to="/login" replace />} />
+        </>
+      )}
         <Route path="/" element={<MainPage />} />
         <Route path="/:category" element={<Category />} />
-        <Route path="/article/:articleId" element={<DetailPage />} />
         {/* {!isAuthenticated && <Route path="/article/:articleId" element={<DetailPage />} />} */}
         {/* <Route path='/register' element={<SignUpForm/>}/>
         <Route path='/login' element={<SignInForm/>}/> */}

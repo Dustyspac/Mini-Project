@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { getMainPage } from "../../APIS/news";
 import { useQuery } from "react-query";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 function NewsList({data}) {
 //   const limitTitle = (title, limit = 20) => {
