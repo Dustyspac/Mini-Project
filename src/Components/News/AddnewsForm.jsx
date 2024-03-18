@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import SelectCustom from "./SelectCustom";
@@ -23,33 +23,32 @@ function AddNewsForm() {
     content: "",
   });
 
-  const handleImg = async (e) => {
-    // e.preventDefault();
-    let file = e.target.files[0];
-    console.log("file", file);
-    setImgFile(file.name);
+  const imgRef = useRef(null);
+
+  // 전체요청
+  const handlePostDataClick = async () => {
+    let file = imgRef.current?.files[0];
 
     const formData = new FormData();
-    formData.append("img", file); //이름 문제였음
+    formData.append("img", file);
 
-    console.log("formData", formData);
     // image post
     try {
       const response = await request.post(`/api/article/img`, formData, {
         headers: {
-          // Authorization: "",
           "Content-Type": "multipart/form-data",
         },
       });
       if (response.status === 200) {
-        // alert("성공적");
-        setNewsData({ ...newsData, imgUrl: response.data.imgUrl }); //data.imgUrl 추가 안 함
-        // console.log("response.data.imgUrl", response.data.imgUrl);
+        postData(response.data.imgUrl);
       }
-      console.log("response", response);
     } catch (error) {
       console.log("에러발생", error);
     }
+  };
+
+  const handleFile = (e) => {
+    setImgFile(e.target.files[0]);
   };
 
   // 초기화 함수
@@ -66,12 +65,12 @@ function AddNewsForm() {
     navigate("/");
   };
 
-  // 전체 내용 post
-  const handleSubmitClick = async () => {
+  // 부가 요청 함수
+  const postData = async (imgUrl) => {
     try {
       const newPost = {
         title: newsData.title,
-        imgUrl: newsData.imgUrl,
+        imgUrl: imgUrl,
         category: newsData.category.value,
         content: newsData.content,
       };
@@ -82,7 +81,6 @@ function AddNewsForm() {
         alert("성공적");
         initFunc();
       }
-      console.log("response", response);
       navigate("/");
     } catch (error) {
       console.log("전체요청 에러발생", error);
@@ -95,7 +93,6 @@ function AddNewsForm() {
     );
     setNewsData({ ...newsData, category: selectedCategory });
   };
-
   return (
     <FormContainer>
       <InputBox>
@@ -111,16 +108,15 @@ function AddNewsForm() {
           category={newsData.category}
           onChange={handleSelectChange}
         />
-        {/* <form
-          action="/home/uploadfiles"
-          method="post"
-          enctype="multipart/form-data"
-        > */}
         <Label htmlFor="imgFile">
-          {imgFile ? imgFile : "이미지를 선택해주세요"}
+          {imgFile ? imgFile.name : "이미지를 선택해주세요"}
         </Label>
-        <InputFile id="imgFile" type="file" onChange={(e) => handleImg(e)} />
-        {/* </form> */}
+        <InputFile
+          id="imgFile"
+          type="file"
+          ref={imgRef}
+          onChange={(e) => handleFile(e)}
+        />
         <Textarea
           type="text"
           value={newsData.content}
@@ -132,7 +128,7 @@ function AddNewsForm() {
       </InputBox>
       <BtnContainer>
         <Btn onClick={handleNavigateClick}>나가기</Btn>
-        <Btn onClick={handleSubmitClick}>업로드</Btn>
+        <Btn onClick={handlePostDataClick}>업로드</Btn>
       </BtnContainer>
     </FormContainer>
   );

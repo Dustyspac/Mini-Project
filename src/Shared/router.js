@@ -25,9 +25,6 @@ const Router = () => {
       )}
         <Route path="/" element={<MainPage />} />
         <Route path="/:category" element={<Category />} />
-        {/* {!isAuthenticated && <Route path="/article/:articleId" element={<DetailPage />} />} */}
-        {/* <Route path='/register' element={<SignUpForm/>}/>
-        <Route path='/login' element={<SignInForm/>}/> */}
         {!isAuthenticated && <Route path="/login" element={<SignInForm />} />}
         {!isAuthenticated && <Route path="/register" element={<SignUpForm />} />}
         <Route path="/article" element={<AddNews />} />

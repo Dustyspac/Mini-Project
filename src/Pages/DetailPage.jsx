@@ -4,6 +4,7 @@ import styled from "styled-components";
 import { deleteNews, editNews, getNewsDetail } from "../APIS/news";
 import { useNavigate, useParams } from "react-router-dom";
 import { useMutation, useQuery, useQueryClient } from "react-query";
+import { useSelector } from "react-redux";
 
 import {
   Btn,
@@ -11,17 +12,16 @@ import {
   FormContainer,
   Input,
   InputBox,
-  InputFile,
   Label,
   Textarea,
 } from "../Components/News/AddnewsForm";
 import SelectCustom from "../Components/News/SelectCustom";
-import request from "../APIS/Axios/api";
 
 function DetailPage() {
   const queryClient = useQueryClient();
   const navigate = useNavigate();
   const params = useParams();
+  const authType = useSelector((state) => state.user.authType);
 
   const options = [
     { value: "SOCIETY", label: "사회" },
@@ -34,19 +34,17 @@ function DetailPage() {
     getNewsDetail(params.articleId)
   );
 
-  const etcOption =
-    data && options.find((option) => option.value === data.category);
+  const etcOption = options.find(
+    (option) => option.value === (data ? data.category : "ETC")
+  );
 
   const [isEdit, setIsEdit] = useState(false);
 
-  const [imgFile, setImgFile] = useState("");
   const [newsData, setNewsData] = useState({
-    title: data ? data.title : "",
-    category: etcOption
-      ? etcOption
-      : options.find((option) => option.value === "ETC"),
-    imgUrl: data ? data.imgUrl : "",
-    content: data ? data.content : "",
+    title: "",
+    category: { value: "ETC", label: "기타" },
+    imgUrl: "",
+    content: "",
   });
 
   const deleteMutation = useMutation((articleId) => deleteNews(articleId), {
@@ -82,31 +80,6 @@ function DetailPage() {
     navigate("/");
   };
 
-  //AddNewsForm
-
-  const handleImg = async (e) => {
-    // e.preventDefault();
-    let file = e.target.files[0];
-    setImgFile(file.name);
-
-    const formData = new FormData();
-    formData.append("img", file);
-
-    // image post
-    try {
-      const response = await request.post(`/api/article/img`, formData, {
-        headers: {
-          // Authorization: "",
-          "Content-Type": "multipart/form-data",
-        },
-      });
-      if (response.status === 200) {
-        setNewsData({ ...newsData, imgUrl: response.data.imgUrl });
-      }
-    } catch (error) {
-      console.log("에러발생", error);
-    }
-  };
   const initFunc = () => {
     setNewsData({
       title: "",
@@ -136,6 +109,16 @@ function DetailPage() {
     }
   };
 
+  const handleEditMode = () => {
+    setIsEdit(!isEdit);
+    setNewsData({
+      title: data.title,
+      category: etcOption,
+      imgUrl: data.imgUrl,
+      content: data.content,
+    });
+  };
+
   const handleSelectChange = (selectedOption) => {
     const selectedCategory = options.find(
       (option) => option.value === selectedOption.value
@@ -163,13 +146,10 @@ function DetailPage() {
               onChange={handleSelectChange}
             />
             <Label htmlFor="imgFile">
-              {imgFile ? imgFile : "이미지를 선택해주세요"}
+              {newsData.imgUrl
+                ? "이미지는 변경 불가합니다"
+                : "이미지를 선택해주세요"}
             </Label>
-            <InputFile
-              id="imgFile"
-              type="file"
-              onChange={(e) => handleImg(e)}
-            />
             <Textarea
               type="text"
               value={newsData.content}
@@ -191,15 +171,19 @@ function DetailPage() {
               <p className="Category">{data?.category}</p>
               <h2 className="title">{data?.title}</h2>
               <p>{data.createdAt}</p>
-              <Button
-                onClick={(e) => {
-                  e.preventDefault();
-                  handleNewsDelete(data.articleId);
-                }}
-              >
-                삭제
-              </Button>
-              <Button onClick={() => setIsEdit(!isEdit)}>수정</Button>
+              {authType === "ADMIN" && (
+                <>
+                  <Button
+                    onClick={(e) => {
+                      e.preventDefault();
+                      handleNewsDelete(data.articleId);
+                    }}
+                  >
+                    삭제
+                  </Button>
+                  <Button onClick={handleEditMode}>수정</Button>
+                </>
+              )}
             </div>
           </Container>
           <NewsContents>
@@ -251,8 +235,6 @@ const Container = styled.div`
     margin-top: 30px;
   }
 `;
-
-const TitleBox = styled.div``;
 
 const NewsContents = styled.div`
   width: 1100px;

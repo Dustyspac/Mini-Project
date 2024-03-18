@@ -17,7 +17,6 @@ function App() {
 
   const { isLoading, isError, data: accessToken, error } = useQuery('accessToken',useraccess, {
     onSuccess:(response) =>{
-      console.log(response)
       navigate('/')
       dispatch(setAuthInfo({ authType: `${response.authType}`, isAuthenticated: true }));
     },

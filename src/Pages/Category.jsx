@@ -12,10 +12,10 @@ function Category() {
   const category = searchParams.get("category");
 
   const { data, isLoading, isError } = useQuery(["category", category], () => getCategoryPage(category));
-  console.log(searchParams.get("category"));
 
   if (isLoading) return <div>Loading...</div>;
   if (isError) return <div>Error fetching data</div>;
+  
   return (
     <>
       <Header />

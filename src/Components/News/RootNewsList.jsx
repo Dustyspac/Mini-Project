@@ -1,46 +1,44 @@
-import React from 'react'
+import React from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { useQuery } from "react-query";
-import {getMainPage} from '../../APIS/news'
+import { getMainPage } from "../../APIS/news";
 
 function RootNewsList() {
-  const {isLoading, isError, data}=useQuery('rootNewsList',getMainPage)
-  console.log('data', data)
+  const { isLoading, isError, data } = useQuery("rootNewsList", getMainPage);
 
-//   const limitTitle = (title, limit = 20) => {
-//     if (title.length > limit) {
-//         return title.substring(0, limit) + '...';
-//     } else {
-//         return title;
-//     }
-// };
+  if (isLoading) return <div>Loading...</div>;
+  if (isError) return <div>Error fetching data</div>;
+
   return (
     <BoxContainer>
       {data?.map((item) => {
         return (
           <Box key={item.articleId}>
             <div className="Contents">
-              <ImageBox imgeUrl={item.imgUrl}/>
-              <CustomLink to={`/article/${item.articleId}`} key={item.articleId}>
+              <ImageBox imgeUrl={item.imgUrl} />
+              <CustomLink
+                to={`/article/${item.articleId}`}
+                key={item.articleId}
+              >
                 <Text>상세보기</Text>
               </CustomLink>
               <Contents>
-              <h2 className="title">{(item.title)}</h2>
+                <h2 className="title">{item.title}</h2>
               </Contents>
-                <InboxContents> 
-                  <p>{item.createdAt}</p>
-                  <p className="Category">{item.category}</p>
-                </InboxContents>
+              <InboxContents>
+                <p>{item.createdAt}</p>
+                <p className="Category">{item.category}</p>
+              </InboxContents>
             </div>
           </Box>
         );
       })}
     </BoxContainer>
-  )
+  );
 }
 
-export default RootNewsList
+export default RootNewsList;
 
 const BoxContainer = styled.div`
   padding: 30px 0 0 0;
@@ -78,16 +76,15 @@ const ImageBox = styled.div`
   width: max-content;
   width: 400px;
   height: 280px;
-  background-image: url(${props => props.imgeUrl});
+  background-image: url(${(props) => props.imgeUrl});
   background-size: 400px 300px;
-`
-
+`;
 
 const Contents = styled.div`
   display: flex;
   justify-content: center;
   padding: 0 20px;
-  
+
   .title {
     text-overflow: ellipsis;
     height: 66px;
@@ -101,16 +98,14 @@ const Contents = styled.div`
 `;
 
 const InboxContents = styled.div`
-    bottom: 10px;
-    display: flex;
-    justify-content: space-between;
-    padding: 0 20px;
+  bottom: 10px;
+  display: flex;
+  justify-content: space-between;
+  padding: 0 20px;
 
-  
-
-    .Category {
+  .Category {
     color: #ff6b00;
     font-weight: bold;
     bottom: 10px;
   }
-`
+`;
