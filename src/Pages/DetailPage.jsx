@@ -1,22 +1,53 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import Header from "../Components/Common/Header";
 import styled from "styled-components";
-import { deleteNews, getNewsDetail } from "../APIS/news";
+import { deleteNews, editNews, getNewsDetail } from "../APIS/news";
 import { useNavigate, useParams } from "react-router-dom";
 import { useMutation, useQuery, useQueryClient } from "react-query";
+
+import {
+  Btn,
+  BtnContainer,
+  FormContainer,
+  Input,
+  InputBox,
+  InputFile,
+  Label,
+  Textarea,
+} from "../Components/News/AddnewsForm";
+import SelectCustom from "../Components/News/SelectCustom";
+import request from "../APIS/Axios/api";
 
 function DetailPage() {
   const queryClient = useQueryClient();
   const navigate = useNavigate();
   const params = useParams();
-  console.log("articleId", params.articleId);
+
+  const options = [
+    { value: "SOCIETY", label: "사회" },
+    { value: "ENVIRONMENT", label: "환경" },
+    { value: "TECH", label: "테크" },
+    { value: "ETC", label: "기타" },
+  ];
+
   const { isLoading, isError, data } = useQuery("detailKey", () =>
     getNewsDetail(params.articleId)
   );
-  // console.log("data7777777777", data);
 
-  // console.log("isLoding", isLoading);
-  // console.log("isError", isError);
+  const etcOption =
+    data && options.find((option) => option.value === data.category);
+
+  const [isEdit, setIsEdit] = useState(false);
+
+  const [imgFile, setImgFile] = useState("");
+  const [newsData, setNewsData] = useState({
+    title: data ? data.title : "",
+    category: etcOption
+      ? etcOption
+      : options.find((option) => option.value === "ETC"),
+    imgUrl: data ? data.imgUrl : "",
+    content: data ? data.content : "",
+  });
 
   const deleteMutation = useMutation((articleId) => deleteNews(articleId), {
     onSuccess: () => {
@@ -27,6 +58,18 @@ function DetailPage() {
       console.log(err);
     },
   });
+
+  const editMutation = useMutation(
+    (updatedPost) => editNews({ articleId: data.articleId, updatedPost }),
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries("detailKey");
+        alert("수정 성공");
+        initFunc();
+        setIsEdit(!isEdit);
+      },
+    }
+  );
 
   const handleNewsDelete = (id) => {
     deleteMutation.mutate(id);
@@ -39,30 +82,133 @@ function DetailPage() {
     navigate("/");
   };
 
+  //AddNewsForm
+
+  const handleImg = async (e) => {
+    // e.preventDefault();
+    let file = e.target.files[0];
+    setImgFile(file.name);
+
+    const formData = new FormData();
+    formData.append("img", file);
+
+    // image post
+    try {
+      const response = await request.post(`/api/article/img`, formData, {
+        headers: {
+          // Authorization: "",
+          "Content-Type": "multipart/form-data",
+        },
+      });
+      if (response.status === 200) {
+        setNewsData({ ...newsData, imgUrl: response.data.imgUrl });
+      }
+    } catch (error) {
+      console.log("에러발생", error);
+    }
+  };
+  const initFunc = () => {
+    setNewsData({
+      title: "",
+      category: { value: "ETC", label: "기타" },
+      imgUrl: "",
+      content: "",
+    });
+  };
+
+  const handleNavigateClick = () => {
+    setIsEdit(!isEdit);
+    initFunc();
+  };
+
+  // 전체 내용 post
+  const handleEditClick = async () => {
+    try {
+      const updatedPost = {
+        title: newsData.title,
+        imgUrl: newsData.imgUrl,
+        category: newsData.category.value,
+        content: newsData.content,
+      };
+      editMutation.mutate(updatedPost);
+    } catch (error) {
+      console.log("수정요청 에러발생", error);
+    }
+  };
+
+  const handleSelectChange = (selectedOption) => {
+    const selectedCategory = options.find(
+      (option) => option.value === selectedOption.value
+    );
+    setNewsData({ ...newsData, category: selectedCategory });
+  };
+
   return (
     <>
       <Header />
-      <Container>
-        <div className="InboxContents">
-          <p className="Category">{data?.category}</p>
-          <h2 className="title">{data?.title}</h2>
-          <p>{data.createdAt}</p>
-          <Button
-            onClick={(e) => {
-              e.preventDefault();
-              handleNewsDelete(data.articleId);
-            }}
-          >
-            삭제
-          </Button>
-          <Button>수정</Button>
-        </div>
-      </Container>
-      <NewsContents>
-        <Img src={`${data.imgUrl}`} alt="썸네일" />
-        <p>{data.content}</p>
-        <Button onClick={handleGoback}>돌아가기</Button>
-      </NewsContents>
+      {isEdit ? (
+        <FormContainer>
+          <InputBox>
+            <Input
+              type="text"
+              value={newsData.title}
+              onChange={(e) =>
+                setNewsData({ ...newsData, title: e.target.value })
+              }
+              placeholder="제목을 입력하세요"
+            />
+            <SelectCustom
+              options={options}
+              category={newsData.category}
+              onChange={handleSelectChange}
+            />
+            <Label htmlFor="imgFile">
+              {imgFile ? imgFile : "이미지를 선택해주세요"}
+            </Label>
+            <InputFile
+              id="imgFile"
+              type="file"
+              onChange={(e) => handleImg(e)}
+            />
+            <Textarea
+              type="text"
+              value={newsData.content}
+              onChange={(e) =>
+                setNewsData({ ...newsData, content: e.target.value })
+              }
+              placeholder="내용을 입력하세요"
+            />
+          </InputBox>
+          <BtnContainer>
+            <Btn onClick={handleNavigateClick}>나가기</Btn>
+            <Btn onClick={handleEditClick}>수정</Btn>
+          </BtnContainer>
+        </FormContainer>
+      ) : (
+        <>
+          <Container>
+            <div className="InboxContents">
+              <p className="Category">{data?.category}</p>
+              <h2 className="title">{data?.title}</h2>
+              <p>{data.createdAt}</p>
+              <Button
+                onClick={(e) => {
+                  e.preventDefault();
+                  handleNewsDelete(data.articleId);
+                }}
+              >
+                삭제
+              </Button>
+              <Button onClick={() => setIsEdit(!isEdit)}>수정</Button>
+            </div>
+          </Container>
+          <NewsContents>
+            <Img src={`${data.imgUrl}`} alt="썸네일" />
+            <p>{data.content}</p>
+            <Button onClick={handleGoback}>돌아가기</Button>
+          </NewsContents>
+        </>
+      )}
     </>
   );
 }

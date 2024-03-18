@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import SelectCustom from "./SelectCustom";
 import request from "../../APIS/Axios/api";
@@ -36,16 +35,12 @@ function AddNewsForm() {
     console.log("formData", formData);
     // image post
     try {
-      const response = await request.post(
-        `/api/article/img`,
-        formData,
-        {
-          headers: {
-            // Authorization: "",
-            "Content-Type": "multipart/form-data",
-          },
-        }
-      );
+      const response = await request.post(`/api/article/img`, formData, {
+        headers: {
+          // Authorization: "",
+          "Content-Type": "multipart/form-data",
+        },
+      });
       if (response.status === 200) {
         // alert("성공적");
         setNewsData({ ...newsData, imgUrl: response.data.imgUrl }); //data.imgUrl 추가 안 함
@@ -80,11 +75,9 @@ function AddNewsForm() {
         category: newsData.category.value,
         content: newsData.content,
       };
-      const response = await request.post(
-        "/api/article",
-        newPost,
-        { withCredentials: true }
-      );
+      const response = await request.post("/api/article", newPost, {
+        withCredentials: true,
+      });
       if (response.status === 200) {
         alert("성공적");
         initFunc();
@@ -104,13 +97,14 @@ function AddNewsForm() {
   };
 
   return (
-    <Container>
+    <FormContainer>
       <InputBox>
         <Input
           type="text"
           value={newsData.title}
           onChange={(e) => setNewsData({ ...newsData, title: e.target.value })}
-          placeholder="제목을 입력하세요" maxLength={40}
+          placeholder="제목을 입력하세요"
+          maxLength={40}
         />
         <SelectCustom
           options={options}
@@ -140,20 +134,20 @@ function AddNewsForm() {
         <Btn onClick={handleNavigateClick}>나가기</Btn>
         <Btn onClick={handleSubmitClick}>업로드</Btn>
       </BtnContainer>
-    </Container>
+    </FormContainer>
   );
 }
 
 export default AddNewsForm;
 
-const Container = styled.div`
+export const FormContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
   padding: 0 80px;
 `;
 
-const InputBox = styled.div`
+export const InputBox = styled.div`
   margin: 18px 0 30px 0;
   display: flex;
   width: 100%;
@@ -161,13 +155,13 @@ const InputBox = styled.div`
   flex-direction: column;
 `;
 
-const Input = styled.input`
+export const Input = styled.input`
   height: 54px;
   margin-top: 17px;
   padding-left: 12px;
 `;
 
-const Label = styled.label`
+export const Label = styled.label`
   height: 54px;
   margin-top: 17px;
   padding-left: 12px;
@@ -177,24 +171,24 @@ const Label = styled.label`
   display: flex;
   align-items: center;
 `;
-const InputFile = styled.input`
+export const InputFile = styled.input`
   display: none;
 `;
 
-const Textarea = styled.textarea`
+export const Textarea = styled.textarea`
   height: 240px;
   font-size: 14px;
   margin-top: 17px;
   padding: 12px;
 `;
 
-const BtnContainer = styled.div`
+export const BtnContainer = styled.div`
   display: flex;
   justify-content: end;
   gap: 12px;
 `;
 
-const Btn = styled.button`
+export const Btn = styled.button`
   width: 320px;
   height: 60px;
   color: white;
