@@ -11,12 +11,10 @@ import {
   FormContainer,
   Input,
   InputBox,
-  InputFile,
   Label,
   Textarea,
 } from "../Components/News/AddnewsForm";
 import SelectCustom from "../Components/News/SelectCustom";
-import request from "../APIS/Axios/api";
 
 function DetailPage() {
   const queryClient = useQueryClient();
@@ -34,21 +32,19 @@ function DetailPage() {
     getNewsDetail(params.articleId)
   );
 
-  const etcOption =
-    data && options.find((option) => option.value === data.category);
+  const etcOption = options.find(
+    (option) => option.value === (data ? data.category : "ETC")
+  );
 
   const [isEdit, setIsEdit] = useState(false);
 
-  const [imgFile, setImgFile] = useState("");
   const [newsData, setNewsData] = useState({
-    title: data ? data.title : "",
-    category: etcOption
-      ? etcOption
-      : options.find((option) => option.value === "ETC"),
-    imgUrl: data ? data.imgUrl : "",
-    content: data ? data.content : "",
+    title: "",
+    category: { value: "ETC", label: "기타" },
+    imgUrl: "",
+    content: "",
   });
-
+  console.log("newsData", newsData);
   const deleteMutation = useMutation((articleId) => deleteNews(articleId), {
     onSuccess: () => {
       queryClient.invalidateQueries("detailKey");
@@ -84,29 +80,6 @@ function DetailPage() {
 
   //AddNewsForm
 
-  const handleImg = async (e) => {
-    // e.preventDefault();
-    let file = e.target.files[0];
-    setImgFile(file.name);
-
-    const formData = new FormData();
-    formData.append("img", file);
-
-    // image post
-    try {
-      const response = await request.post(`/api/article/img`, formData, {
-        headers: {
-          // Authorization: "",
-          "Content-Type": "multipart/form-data",
-        },
-      });
-      if (response.status === 200) {
-        setNewsData({ ...newsData, imgUrl: response.data.imgUrl });
-      }
-    } catch (error) {
-      console.log("에러발생", error);
-    }
-  };
   const initFunc = () => {
     setNewsData({
       title: "",
@@ -136,6 +109,17 @@ function DetailPage() {
     }
   };
 
+  const handleEditMode = () => {
+    setIsEdit(!isEdit);
+    // data를 넘겨?
+    setNewsData({
+      title: data.title,
+      category: etcOption,
+      imgUrl: data.imgUrl,
+      content: data.content,
+    });
+  };
+
   const handleSelectChange = (selectedOption) => {
     const selectedCategory = options.find(
       (option) => option.value === selectedOption.value
@@ -163,13 +147,8 @@ function DetailPage() {
               onChange={handleSelectChange}
             />
             <Label htmlFor="imgFile">
-              {imgFile ? imgFile : "이미지를 선택해주세요"}
+              {newsData.imgUrl ? "이미지는 변경 불가합니다" : "이미지를 선택해주세요"}
             </Label>
-            <InputFile
-              id="imgFile"
-              type="file"
-              onChange={(e) => handleImg(e)}
-            />
             <Textarea
               type="text"
               value={newsData.content}
@@ -199,7 +178,7 @@ function DetailPage() {
               >
                 삭제
               </Button>
-              <Button onClick={() => setIsEdit(!isEdit)}>수정</Button>
+              <Button onClick={handleEditMode}>수정</Button>
             </div>
           </Container>
           <NewsContents>
@@ -251,8 +230,6 @@ const Container = styled.div`
     margin-top: 30px;
   }
 `;
-
-const TitleBox = styled.div``;
 
 const NewsContents = styled.div`
   width: 1100px;
