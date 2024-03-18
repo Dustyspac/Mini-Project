@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import Header from "../Components/Common/Header";
 import styled from "styled-components";
-import { deleteNews, getNewsDetail } from "../APIS/news";
+import { deleteNews, editNews, getNewsDetail } from "../APIS/news";
 import { useNavigate, useParams } from "react-router-dom";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 
@@ -59,6 +59,18 @@ function DetailPage() {
     },
   });
 
+  const editMutation = useMutation(
+    (updatedPost) => editNews({ articleId: data.articleId, updatedPost }),
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries("detailKey");
+        alert("수정 성공");
+        initFunc();
+        setIsEdit(!isEdit);
+      },
+    }
+  );
+
   const handleNewsDelete = (id) => {
     deleteMutation.mutate(id);
   };
@@ -75,13 +87,11 @@ function DetailPage() {
   const handleImg = async (e) => {
     // e.preventDefault();
     let file = e.target.files[0];
-    console.log("file", file);
     setImgFile(file.name);
 
     const formData = new FormData();
-    formData.append("img", file); //이름 문제였음
+    formData.append("img", file);
 
-    console.log("formData", formData);
     // image post
     try {
       const response = await request.post(`/api/article/img`, formData, {
@@ -91,11 +101,8 @@ function DetailPage() {
         },
       });
       if (response.status === 200) {
-        // alert("성공적");
-        setNewsData({ ...newsData, imgUrl: response.data.imgUrl }); //data.imgUrl 추가 안 함
-        // console.log("response.data.imgUrl", response.data.imgUrl);
+        setNewsData({ ...newsData, imgUrl: response.data.imgUrl });
       }
-      console.log("response", response);
     } catch (error) {
       console.log("에러발생", error);
     }
@@ -111,6 +118,7 @@ function DetailPage() {
 
   const handleNavigateClick = () => {
     setIsEdit(!isEdit);
+    initFunc();
   };
 
   // 전체 내용 post
@@ -122,17 +130,7 @@ function DetailPage() {
         category: newsData.category.value,
         content: newsData.content,
       };
-      const response = await request.put(
-        `/api/article/${data.articleId}`,
-        updatedPost
-      );
-      if (response.status === 200) {
-        alert("성공적");
-        initFunc();
-      }
-      console.log("response", response);
-      // navigate("/");
-      setIsEdit(!isEdit);
+      editMutation.mutate(updatedPost);
     } catch (error) {
       console.log("수정요청 에러발생", error);
     }
