@@ -37,3 +37,8 @@ export const getNewsDetail = async (articleId) => {
 export const deleteNews = async (articleId) => {
   await request.delete(`/api/article/${articleId}`);
 };
+
+// 게시글 put
+export const editNews = async ({ articleId, updatedPost }) => {
+  await request.put(`api/article/${articleId}`, updatedPost);
+};
