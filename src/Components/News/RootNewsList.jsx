@@ -42,10 +42,13 @@ export default RootNewsList;
 
 const BoxContainer = styled.div`
   padding: 30px 0 0 0;
+  width: 100%;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
   gap: 5px;
+  max-width: calc((400px + 5px) * 5 - 5px); 
+  margin: 0 auto; 
 `;
 
 const CustomLink = styled(Link)`
@@ -72,13 +75,16 @@ const Box = styled.div`
 `;
 
 const ImageBox = styled.div`
-  position: relative;
   width: max-content;
   width: 400px;
   height: 280px;
-  background-image: url(${(props) => props.imgeUrl});
+  background-image: url(${props => props.imgeUrl});
+  filter: grayscale(100%);
   background-size: 400px 300px;
-`;
+  &:hover{
+    filter: none;
+  }
+`
 
 const Contents = styled.div`
   display: flex;
