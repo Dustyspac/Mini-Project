@@ -40,6 +40,8 @@ const BoxContainer = styled.div`
   flex-wrap: wrap;
   justify-content: center;
   gap: 5px;
+  max-width: calc((400px + 5px) * 5 - 5px); 
+  margin: 0 auto; 
 `;
 
 const CustomLink = styled(Link)`
@@ -66,8 +68,13 @@ const ImageBox = styled.div`
   width: 400px;
   height: 280px;
   background-image: url(${props => props.imgeUrl});
+  filter: grayscale(100%);
   background-size: 400px 300px;
+  &:hover{
+    filter: none;
+  }
 `
+
 
 
 const Contents = styled.div`

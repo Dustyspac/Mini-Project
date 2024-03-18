@@ -12,10 +12,10 @@ function Category() {
   const category = searchParams.get("category");
 
   const { data, isLoading, isError } = useQuery(["category", category], () => getCategoryPage(category));
+  console.log(searchParams.get("category"));
 
   if (isLoading) return <div>Loading...</div>;
   if (isError) return <div>Error fetching data</div>;
-  
   return (
     <>
       <Header />
@@ -39,20 +39,21 @@ const NewsListWrapper = styled.div`
 `;
 
 const ToggleBox = styled.div`
-  width: 130px;
   height: 40px;
+  margin-top: 30px;
   padding: 10px;
-  border: 1px solid black;
   background-color: #eae7de;
   display: flex;
+  align-items: center;
   justify-content: center;
-  margin-top: 8px;
-  margin-left: 220px;
+  /* margin-top: 8px;
+  margin-left: 220px; */
 
   .CurrentCategory {
     text-align: center;
     font-weight: bolder;
-    font-size: 18px;
+    font-size: 25px;
     margin: auto;
+    color: #ff6b00;
   }
 `;
