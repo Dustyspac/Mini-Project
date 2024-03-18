@@ -8,8 +8,15 @@
 ##### 데일리 이슈를 매일 2~3개씩 업로드 해주는 뉴스레터   
 ------
 
-### 조원 소개 (FE)
-김기현, 이예진, 정예진   
+### 조원 소개
+- Front End
+  - 김기현(https://github.com/Dustyspac)
+  - 정예진(https://github.com/asdfg030906)
+  - 이예진(https://github.com/yeeendy)
+- Back End
+  - 김대용(https://github.com/cheesecup)
+  - 황승미(https://github.com/Seungmi97)
+  - 김엄지(https://github.com/kimeomji333)
 
 ------
 
@@ -17,10 +24,12 @@
 <div style="display:flex; flex-direction:column; align-items:flex-start;">
     <p><strong>Frontend</strong></p>
     <div>
-        <img src="https://img.shields.io/badge/javascript-F7DF1E?style=flat-square&logo=javascript&logoColor=black">
-        <img src="https://img.shields.io/badge/react-61DAFB?style=flat-square&logo=react&logoColor=black"> 
-        <img src="https://img.shields.io/badge/html5-E34F26?style=flat-square&logo=html5&logoColor=white"> 
-        <img src="https://img.shields.io/badge/css-1572B6?style=flat-square&logo=css3&logoColor=white"> 
+        <img src="https://img.shields.io/badge/-React-61DAFB?style=for-the-badge&logo=React&logoColor=white"/>
+        <img src="https://img.shields.io/badge/-css3-1572B6?style=for-the-badge&logo=css3&logoColor=white"/>
+        <img src="https://img.shields.io/badge/-Redux-764ABC?style=for-the-badge&logo=Redux&logoColor=white"/>
+        <img src="https://img.shields.io/badge/reactquery-FF4154?style=for-the-badge&logo=reactquery&logoColor=white"/>
+        <img src="https://img.shields.io/badge/-styled components-DB7093?style=for-the-badge&logo=styled components&logoColor=white"/>
+        <img src="https://img.shields.io/badge/axios-5A29E4?style=for-the-badge&logo=axios&logoColor=white"/>
     </div>   
 
 <p><strong>Version Control</strong></p>
