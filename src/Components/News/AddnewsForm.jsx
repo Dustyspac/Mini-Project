@@ -25,16 +25,12 @@ function AddNewsForm() {
 
   const imgRef = useRef(null);
 
-  // 이게 전체요청
+  // 전체요청
   const handlePostDataClick = async () => {
-    // e.preventDefault();
-    // let file = e.target.files[0]; // useRef
     let file = imgRef.current?.files[0];
-    // console.log("file", file);
-    // setImgFile(file.name);
 
     const formData = new FormData();
-    formData.append("img", file); //이름 문제였음
+    formData.append("img", file);
 
     console.log("formData", formData);
     // image post
@@ -45,10 +41,7 @@ function AddNewsForm() {
         },
       });
       if (response.status === 200) {
-        // alert("성공적");
-        // setNewsData({ ...newsData, imgUrl: response.data.imgUrl }); //data.imgUrl 추가 안 함
         postData(response.data.imgUrl);
-        // console.log("response.data.imgUrl", response.data.imgUrl);
       }
       console.log("response", response);
     } catch (error) {
@@ -74,10 +67,8 @@ function AddNewsForm() {
     navigate("/");
   };
 
-  // 전체 내용 post
   // 부가 요청 함수
   const postData = async (imgUrl) => {
-    // 비동기를 위해
     try {
       const newPost = {
         title: newsData.title,
