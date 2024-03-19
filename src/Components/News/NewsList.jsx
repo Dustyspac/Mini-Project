@@ -40,8 +40,8 @@ const BoxContainer = styled.div`
   flex-wrap: wrap;
   justify-content: center;
   gap: 5px;
-  max-width: calc((400px + 5px) * 5 - 5px); 
-  margin: 0 auto; 
+  max-width: calc((400px + 5px) * 5 - 5px);
+  margin: 0 auto;
 `;
 
 const CustomLink = styled(Link)`
@@ -53,9 +53,11 @@ const CustomLink = styled(Link)`
     color: black;
   }
 `;
+
 const Text = styled.p`
   margin-left: 20px;
 `;
+
 const Box = styled.div`
   border: 1px solid black;
   width: 400px;
@@ -74,8 +76,6 @@ const ImageBox = styled.div`
     filter: none;
   }
 `
-
-
 
 const Contents = styled.div`
   display: flex;
@@ -99,8 +99,6 @@ const InboxContents = styled.div`
     display: flex;
     justify-content: space-between;
     padding: 0 20px;
-
-  
 
     .Category {
     color: #ff6b00;
